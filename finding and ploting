@@ -1,0 +1,58 @@
+
+import matplotlib.pyplot as plt
+import pandas as pd
+import numpy as np
+import xlrd
+import xlsxwriter
+import openpyxl
+
+#main code 
+
+#reading the excel file
+
+dataML= pd.read_excel('MLDATA.xlsx')
+dataMB= pd.read_excel('MBDATA.xlsx')
+nrow=0
+
+# making a new excel file 
+outWorkbook = xlsxwriter.Workbook("out.xlsx") 
+outsheet = outWorkbook.add_worksheet()
+outsheet.write("A1", "EVENTID")
+outsheet.write("B1", "MAG(MB)")
+outsheet.write("C1", "MAG(ML)")
+
+#accessing the coloumn wise data
+event_ML=np.array([dataML['EVENTID']],int)
+event_MB=np.array([dataMB['EVENTID']],int)
+MAG_ML= np.array([dataML['MAG']],float)
+MAG_MB= np.array([dataMB['MAG']],float)
+
+
+#looping for checking comman events
+for i in range(0,event_MB.size):
+	 a= event_MB[0,i]
+	 for j in range(event_ML.size):
+	 	b= event_ML[0,j]
+	 	if(a==b):
+	 		nrow = nrow+1
+	 		outsheet.write(nrow,0,a)
+	 		mb= MAG_MB[0,i]
+	 		outsheet.write(nrow,1,mb)
+	 		ml=MAG_ML[0,j]
+	 		outsheet.write(nrow,2,ml)	 		
+
+
+outWorkbook.close()
+#plotting the graph
+data= pd.read_excel('out.xlsx')
+
+x_axis=np.array([data['MAG(MB)']],float)
+y_axis=np.array([data['MAG(ML)']],float)
+
+plt.scatter(x_axis[0], y_axis[0])
+plt.xlabel('MB')
+plt.ylabel('ML')
+plt.xlim([4.2, 6.5])
+plt.ylim([4.2, 6.5])
+#plt.plot(x_axis[0], y_axis[0])
+plt.show()
