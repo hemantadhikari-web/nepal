@@ -13,7 +13,6 @@ import openpyxl
 dataML= pd.read_excel('MLdata.xlsx')
 dataMB= pd.read_excel('MBdata.xlsx')
 nrow=0
-dic= {}
 # making a new excel file 
 outWorkbook = xlsxwriter.Workbook("out.xlsx") 
 outsheet = outWorkbook.add_worksheet()
