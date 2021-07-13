@@ -5,7 +5,6 @@ import numpy as np
 import xlrd
 import xlsxwriter
 import openpyxl
-
 #main code 
 
 #reading the excel file
@@ -65,6 +64,7 @@ data= pd.read_excel('out.xlsx')
 out_MB= np.array([data['MAG(ML)']],float)
 out_ML= np.array([data['MAG(MB)']],float)
 np.sort(out_MB)
+
 
 unique_elements, counts_elements = np.unique(out_MB, return_counts=True)
 
